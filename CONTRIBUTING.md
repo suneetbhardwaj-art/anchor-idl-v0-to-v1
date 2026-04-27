@@ -34,3 +34,5 @@ All 55 tests must pass before any PR is merged.
 npm run build
 npx codemod publish
 ```
+
+Tested on Node.js v18 and v20.
