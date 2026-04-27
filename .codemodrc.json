@@ -7,7 +7,7 @@
   "engine": "jssg",
   "meta": {
     "tags": ["anchor", "solana", "idl", "migration", "web3", "blockchain", "upgrade"],
-    "git": "https://github.com/YOUR_USERNAME/anchor-idl-v0-to-v1"
+    "git": "https://github.com/suneetbhardwaj-art/anchor-idl-v0-to-v1"
   },
   "applicability": {
     "from": [["anchor", "<=", "0.29.0"]],
