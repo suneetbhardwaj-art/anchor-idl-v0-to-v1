@@ -103,7 +103,7 @@ npx codemod anchor/idl/v0-to-v1 --target ./target/idl/
 ### Standalone CLI
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/anchor-idl-v0-to-v1
+git clone https://github.com/suneetbhardwaj-art/anchor-idl-v0-to-v1
 cd anchor-idl-v0-to-v1
 npm install
 npm run build
