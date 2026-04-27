@@ -1,0 +1,76 @@
+{
+  "version": "0.1.0",
+  "name": "token_escrow",
+  "docs": ["A simple token escrow program built with Anchor"],
+  "instructions": [
+    {
+      "name": "initialize",
+      "docs": ["Initialize a new escrow account"],
+      "accounts": [
+        { "name": "initializer", "isMut": true, "isSigner": true },
+        { "name": "initializerDepositTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "initializerReceiveTokenAccount", "isMut": false, "isSigner": false },
+        { "name": "escrowAccount", "isMut": true, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "rent", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "initializerAmount", "type": "u64" },
+        { "name": "takerAmount", "type": "u64" }
+      ]
+    },
+    {
+      "name": "exchange",
+      "docs": ["Execute the escrow exchange"],
+      "accounts": [
+        { "name": "taker", "isMut": true, "isSigner": true },
+        { "name": "takerDepositTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "takerReceiveTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "initializerDepositTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "initializerReceiveTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "initializer", "isMut": true, "isSigner": false },
+        { "name": "escrowAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "pdaAccount", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel",
+      "docs": ["Cancel the escrow and return tokens"],
+      "accounts": [
+        { "name": "initializer", "isMut": true, "isSigner": true },
+        { "name": "initializerDepositTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "pdaDepositTokenAccount", "isMut": true, "isSigner": false },
+        { "name": "escrowAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenProgram", "isMut": false, "isSigner": false },
+        { "name": "pdaAccount", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EscrowAccount",
+      "docs": ["Stores escrow state"],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "initializerKey", "type": "publicKey" },
+          { "name": "initializerDepositTokenAccount", "type": "publicKey" },
+          { "name": "initializerReceiveTokenAccount", "type": "publicKey" },
+          { "name": "initializerAmount", "type": "u64" },
+          { "name": "takerAmount", "type": "u64" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    { "code": 6000, "name": "AmountMismatch", "msg": "Amount mismatch" },
+    { "code": 6001, "name": "NotInitializer", "msg": "Not the initializer" }
+  ],
+  "metadata": {
+    "address": "22Y43yTVxuUkoRKdm9thyRhQ3SdgQS7c7kB6UNCiaczD"
+  }
+}

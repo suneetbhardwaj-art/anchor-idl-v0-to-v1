@@ -1,0 +1,354 @@
+{
+  "address": "DAovote1111111111111111111111111111111111111",
+  "metadata": {
+    "name": "dao_voting",
+    "version": "0.2.0",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "createProposal",
+      "discriminator": [
+        168,
+        122,
+        39,
+        146,
+        105,
+        134,
+        168,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "proposer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "proposal_account",
+          "writable": true
+        },
+        {
+          "name": "dao_config"
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "voteOptions",
+          "type": {
+            "vec": "string"
+          }
+        },
+        {
+          "name": "duration",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "castVote",
+      "discriminator": [
+        131,
+        88,
+        5,
+        240,
+        255,
+        255,
+        15,
+        0
+      ],
+      "accounts": [
+        {
+          "name": "voter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "vote_record",
+          "writable": true
+        },
+        {
+          "name": "proposal_account",
+          "writable": true
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "voter_token_account"
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "optionIndex",
+          "type": "u8"
+        },
+        {
+          "name": "voteWeight",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "finalizeProposal",
+      "discriminator": [
+        36,
+        194,
+        140,
+        8,
+        64,
+        228,
+        222,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "proposal_account",
+          "writable": true
+        },
+        {
+          "name": "dao_treasury",
+          "writable": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ProposalAccount",
+      "discriminator": [
+        160,
+        106,
+        182,
+        139,
+        184,
+        43,
+        178,
+        11
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proposer",
+            "type": "publicKey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "ProposalStatus"
+              }
+            }
+          },
+          {
+            "name": "voteOptions",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "voteCounts",
+            "type": {
+              "vec": "u64"
+            }
+          },
+          {
+            "name": "startTime",
+            "type": "i64"
+          },
+          {
+            "name": "endTime",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteRecord",
+      "discriminator": [
+        136,
+        88,
+        117,
+        151,
+        105,
+        230,
+        94,
+        5
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "voter",
+            "type": "publicKey"
+          },
+          {
+            "name": "proposalKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "optionIndex",
+            "type": "u8"
+          },
+          {
+            "name": "weight",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ProposalStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Passed"
+          },
+          {
+            "name": "Failed"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteOption",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "label",
+            "type": "string"
+          },
+          {
+            "name": "count",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "ProposalCreated",
+      "discriminator": [
+        180,
+        203,
+        188,
+        251,
+        15,
+        0,
+        96,
+        6
+      ],
+      "fields": [
+        {
+          "name": "proposalKey",
+          "type": "publicKey"
+        },
+        {
+          "name": "proposer",
+          "type": "publicKey"
+        },
+        {
+          "name": "title",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "VoteCast",
+      "discriminator": [
+        64,
+        244,
+        175,
+        58,
+        131,
+        56,
+        83,
+        5
+      ],
+      "fields": [
+        {
+          "name": "voter",
+          "type": "publicKey"
+        },
+        {
+          "name": "proposalKey",
+          "type": "publicKey"
+        },
+        {
+          "name": "optionIndex",
+          "type": "u8"
+        },
+        {
+          "name": "weight",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ProposalNotActive",
+      "msg": "Proposal is not active"
+    },
+    {
+      "code": 6001,
+      "name": "AlreadyVoted",
+      "msg": "Already voted on this proposal"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidOption",
+      "msg": "Invalid vote option"
+    },
+    {
+      "code": 6003,
+      "name": "VotingPeriodEnded",
+      "msg": "Voting period has ended"
+    }
+  ]
+}

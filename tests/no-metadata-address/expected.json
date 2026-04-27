@@ -1,0 +1,95 @@
+{
+  "address": "11111111111111111111111111111111",
+  "metadata": {
+    "name": "simple_counter",
+    "version": "0.0.1",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [
+        72,
+        84,
+        181,
+        11,
+        128,
+        168,
+        106,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "counter",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "increment",
+      "discriminator": [
+        226,
+        14,
+        192,
+        76,
+        68,
+        116,
+        103,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "counter",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Counter",
+      "discriminator": [
+        118,
+        119,
+        87,
+        101,
+        38,
+        34,
+        210,
+        13
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "count",
+            "type": "u64"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ]
+}

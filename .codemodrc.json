@@ -1,0 +1,16 @@
+{
+  "$schema": "https://codemod-utils.s3.us-west-1.amazonaws.com/configuration_schema.json",
+  "version": "1.0.0",
+  "private": false,
+  "name": "anchor/idl/v0-to-v1",
+  "description": "Migrates Anchor IDL v0 (pre-0.30) JSON files to v1 (Anchor v0.30+). Converts isMut/isSigner to writable/signer, camelCase account names to snake_case, restructures metadata, and adds discriminators.",
+  "engine": "jssg",
+  "meta": {
+    "tags": ["anchor", "solana", "idl", "migration", "web3", "blockchain", "upgrade"],
+    "git": "https://github.com/YOUR_USERNAME/anchor-idl-v0-to-v1"
+  },
+  "applicability": {
+    "from": [["anchor", "<=", "0.29.0"]],
+    "to":   [["anchor", ">=", "0.30.0"]]
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "address": "22Y43yTVxuUkoRKdm9thyRhQ3SdgQS7c7kB6UNCiaczD",
+  "metadata": {
+    "name": "token_escrow",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "A simple token escrow program built with Anchor"
+  },
+  "docs": [
+    "A simple token escrow program built with Anchor"
+  ],
+  "instructions": [
+    {
+      "name": "initialize",
+      "discriminator": [
+        72,
+        84,
+        181,
+        11,
+        128,
+        168,
+        106,
+        6
+      ],
+      "accounts": [
+        {
+          "name": "initializer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "initializer_deposit_token_account",
+          "writable": true
+        },
+        {
+          "name": "initializer_receive_token_account"
+        },
+        {
+          "name": "escrow_account",
+          "writable": true
+        },
+        {
+          "name": "system_program"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "rent"
+        }
+      ],
+      "args": [
+        {
+          "name": "initializerAmount",
+          "type": "u64"
+        },
+        {
+          "name": "takerAmount",
+          "type": "u64"
+        }
+      ],
+      "docs": [
+        "Initialize a new escrow account"
+      ]
+    },
+    {
+      "name": "exchange",
+      "discriminator": [
+        27,
+        145,
+        57,
+        195,
+        28,
+        49,
+        147,
+        9
+      ],
+      "accounts": [
+        {
+          "name": "taker",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "taker_deposit_token_account",
+          "writable": true
+        },
+        {
+          "name": "taker_receive_token_account",
+          "writable": true
+        },
+        {
+          "name": "initializer_deposit_token_account",
+          "writable": true
+        },
+        {
+          "name": "initializer_receive_token_account",
+          "writable": true
+        },
+        {
+          "name": "initializer",
+          "writable": true
+        },
+        {
+          "name": "escrow_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pda_account"
+        }
+      ],
+      "args": [],
+      "docs": [
+        "Execute the escrow exchange"
+      ]
+    },
+    {
+      "name": "cancel",
+      "discriminator": [
+        80,
+        213,
+        173,
+        26,
+        1,
+        80,
+        213,
+        13
+      ],
+      "accounts": [
+        {
+          "name": "initializer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "initializer_deposit_token_account",
+          "writable": true
+        },
+        {
+          "name": "pda_deposit_token_account",
+          "writable": true
+        },
+        {
+          "name": "escrow_account",
+          "writable": true
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "pda_account"
+        }
+      ],
+      "args": [],
+      "docs": [
+        "Cancel the escrow and return tokens"
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EscrowAccount",
+      "discriminator": [
+        24,
+        161,
+        26,
+        193,
+        204,
+        236,
+        126,
+        7
+      ],
+      "docs": [
+        "Stores escrow state"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "initializerKey",
+            "type": "publicKey"
+          },
+          {
+            "name": "initializerDepositTokenAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "initializerReceiveTokenAccount",
+            "type": "publicKey"
+          },
+          {
+            "name": "initializerAmount",
+            "type": "u64"
+          },
+          {
+            "name": "takerAmount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "AmountMismatch",
+      "msg": "Amount mismatch"
+    },
+    {
+      "code": 6001,
+      "name": "NotInitializer",
+      "msg": "Not the initializer"
+    }
+  ]
+}

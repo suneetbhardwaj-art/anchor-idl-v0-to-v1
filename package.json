@@ -1,0 +1,28 @@
+{
+  "name": "anchor-idl-v0-to-v1",
+  "version": "1.0.0",
+  "description": "Automated codemod to migrate Anchor IDL v0 (pre-0.30) JSON files to v1 (Anchor v0.30+).",
+  "author": "Hackathon Submission",
+  "license": "MIT",
+  "private": false,
+  "main": "dist/index.js",
+  "bin": {
+    "anchor-idl-migrate": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "migrate": "node dist/cli.js",
+    "codemod:test": "npx codemod@latest jssg test",
+    "codemod:run": "npx codemod@latest workflow run -w workflow.yaml"
+  },
+  "keywords": ["codemod", "anchor", "solana", "idl", "migration", "web3"],
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.0"
+  }
+}

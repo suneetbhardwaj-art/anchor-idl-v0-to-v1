@@ -1,0 +1,74 @@
+version: "1"
+
+nodes:
+  - id: anchor-idl-v0-to-v1
+    name: "Anchor IDL v0 → v1 Migration"
+    type: automatic
+    steps:
+
+      # ── Step 1: JSSG deterministic transform ──────────────────────────
+      # Handles ~95% of migration: isMut→writable, isSigner→signer,
+      # camelCase→snake_case, type defs, metadata, discriminators
+      - name: "Run JSSG transform (deterministic — handles 95%)"
+        jssg:
+          source: "scripts/codemod.ts"
+          include:
+            - "**/*.json"
+          exclude:
+            - "node_modules/**"
+            - "package.json"
+            - "package-lock.json"
+            - "tsconfig.json"
+            - ".prettierrc.json"
+            - ".eslintrc.json"
+            - "yarn.lock"
+
+      # ── Step 2: AI step for edge cases ────────────────────────────────
+      # Handles the remaining ~5%:
+      #   - Complex PDA seeds with dot-notation paths
+      #   - #[zero_copy] / #[repr(C)] structs needing serialization fields
+      #   - Missing program addresses (placeholder → real declare_id!)
+      #   - Generic type definitions
+      - name: "AI edge-case handler"
+        ai:
+          prompt: |
+            You are completing an Anchor IDL v0 → v1 migration.
+            The JSSG codemod already handled ~95% of changes automatically.
+
+            YOUR TASKS — fix these remaining edge cases only:
+
+            1. MISSING PROGRAM ADDRESS
+               If top-level "address" is "11111111111111111111111111111111"
+               (the system program placeholder), find the real program ID from:
+               - Anchor.toml → [programs.localnet] or [programs.mainnet]
+               - src/lib.rs → declare_id!("...")
+               Replace the placeholder. If you cannot find it, leave a comment.
+
+            2. COMPLEX PDA SEEDS
+               Fix pda.seeds entries where the path uses dot-notation like
+               "config.authority" or references computed values.
+               Correct structure: { "kind": "account", "path": "field", "account": "AccountType" }
+
+            3. ZERO-COPY / REPR STRUCTS
+               If Rust source has #[zero_copy] or #[repr(C)] on a struct,
+               add to its IDL type definition:
+               { "serialization": "bytemuck", "repr": { "kind": "c" } }
+
+            4. VALIDATION — verify all IDL files now have:
+               - No "isMut" or "isSigner" fields anywhere
+               - All instruction account names are snake_case
+               - Every instruction/account/event has a discriminator [8 numbers]
+               - top-level "address" is a valid non-placeholder base58 string
+
+            Make only targeted changes. Do not redo what the JSSG step already did.
+
+      # ── Step 3: Format output ──────────────────────────────────────────
+      - name: "Format migrated IDL JSON files"
+        run: |
+          if command -v npx &>/dev/null; then
+            npx prettier --write "**/*.json" \
+              --ignore "node_modules/**" \
+              --ignore "package-lock.json" \
+              2>/dev/null || true
+          fi
+          echo "✅ anchor/idl/v0-to-v1 migration complete"

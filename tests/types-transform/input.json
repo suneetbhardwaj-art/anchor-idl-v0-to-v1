@@ -1,0 +1,128 @@
+{
+  "version": "0.2.0",
+  "name": "dao_voting",
+  "instructions": [
+    {
+      "name": "createProposal",
+      "accounts": [
+        { "name": "proposer", "isMut": true, "isSigner": true },
+        { "name": "proposalAccount", "isMut": true, "isSigner": false },
+        { "name": "daoConfig", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "title", "type": "string" },
+        { "name": "description", "type": "string" },
+        { "name": "voteOptions", "type": { "vec": "string" } },
+        { "name": "duration", "type": "i64" }
+      ]
+    },
+    {
+      "name": "castVote",
+      "accounts": [
+        { "name": "voter", "isMut": true, "isSigner": true },
+        { "name": "voteRecord", "isMut": true, "isSigner": false },
+        { "name": "proposalAccount", "isMut": true, "isSigner": false },
+        { "name": "tokenMint", "isMut": false, "isSigner": false },
+        { "name": "voterTokenAccount", "isMut": false, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "optionIndex", "type": "u8" },
+        { "name": "voteWeight", "type": "u64" }
+      ]
+    },
+    {
+      "name": "finalizeProposal",
+      "accounts": [
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "proposalAccount", "isMut": true, "isSigner": false },
+        { "name": "daoTreasury", "isMut": true, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ProposalAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "proposer", "type": "publicKey" },
+          { "name": "title", "type": "string" },
+          { "name": "description", "type": "string" },
+          { "name": "status", "type": { "defined": "ProposalStatus" } },
+          { "name": "voteOptions", "type": { "vec": "string" } },
+          { "name": "voteCounts", "type": { "vec": "u64" } },
+          { "name": "startTime", "type": "i64" },
+          { "name": "endTime", "type": "i64" },
+          { "name": "bump", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "VoteRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "voter", "type": "publicKey" },
+          { "name": "proposalKey", "type": "publicKey" },
+          { "name": "optionIndex", "type": "u8" },
+          { "name": "weight", "type": "u64" }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "ProposalStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          { "name": "Active" },
+          { "name": "Passed" },
+          { "name": "Failed" },
+          { "name": "Cancelled" }
+        ]
+      }
+    },
+    {
+      "name": "VoteOption",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "label", "type": "string" },
+          { "name": "count", "type": "u64" }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "ProposalCreated",
+      "fields": [
+        { "name": "proposalKey", "type": "publicKey" },
+        { "name": "proposer", "type": "publicKey" },
+        { "name": "title", "type": "string" }
+      ]
+    },
+    {
+      "name": "VoteCast",
+      "fields": [
+        { "name": "voter", "type": "publicKey" },
+        { "name": "proposalKey", "type": "publicKey" },
+        { "name": "optionIndex", "type": "u8" },
+        { "name": "weight", "type": "u64" }
+      ]
+    }
+  ],
+  "errors": [
+    { "code": 6000, "name": "ProposalNotActive", "msg": "Proposal is not active" },
+    { "code": 6001, "name": "AlreadyVoted", "msg": "Already voted on this proposal" },
+    { "code": 6002, "name": "InvalidOption", "msg": "Invalid vote option" },
+    { "code": 6003, "name": "VotingPeriodEnded", "msg": "Voting period has ended" }
+  ],
+  "metadata": {
+    "address": "DAovote1111111111111111111111111111111111111"
+  }
+}

@@ -1,0 +1,22 @@
+# rules/idl_cleanup.yaml
+# Fast YAML ast-grep rules to catch any remaining legacy Anchor IDL v0 fields
+# that the JSSG codemod may have missed (belt-and-suspenders pass).
+#
+# These rules are intentionally conservative — they only match patterns
+# that are unambiguously wrong in a v1 IDL, so false positives = 0.
+
+id: remove-isMut-false
+language: json
+rule:
+  pattern: '"isMut": false'
+fix: ""
+message: "Remove isMut: false (v1 omits this field entirely)"
+
+---
+
+id: remove-isSigner-false
+language: json
+rule:
+  pattern: '"isSigner": false'
+fix: ""
+message: "Remove isSigner: false (v1 omits this field entirely)"
