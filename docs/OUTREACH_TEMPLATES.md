@@ -11,7 +11,7 @@ This is worth up to $2,000 in the hackathon.
 
 **Body:**
 
-Hi Anchor team 👋
+Hi Anchor team 
 
 I've built an automated codemod that migrates Anchor IDL v0 (pre-0.30) JSON files to the new v1 spec. It handles ~95% of the migration deterministically:
 
@@ -37,7 +37,7 @@ Even a one-line mention like `"For automated migration, try [codemod]"` would be
 
 ## Discord Message Template (Anchor Discord #tooling channel)
 
-Hey everyone 👋 
+Hey everyone 
 
 I built an automated codemod for the Anchor IDL v0 → v1 migration (the one where `isMut`/`isSigner` became `writable`/`signer` in v0.30).
 
@@ -61,13 +61,13 @@ Tired of manually changing `isMut: true` to `writable: true` across hundreds of 
 npx codemod anchor-idl-v0-to-v1 --target ./target/idl/
 ```
 
-✅ isMut → writable
-✅ isSigner → signer  
-✅ camelCase → snake_case account names
-✅ Type definition restructuring
-✅ Zero false positives
+- isMut → writable
+- isSigner → signer  
+- camelCase → snake_case account names
+- Type definition restructuring
+- Zero false positives
 
-Built with @codemod_com 🛠️
+Built with @codemod_com 
 
 [link to repo]
 
