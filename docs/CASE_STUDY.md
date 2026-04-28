@@ -45,12 +45,12 @@ The migration logic is framework-agnostic — it can also be used as a standalon
 We validated the codemod against the **Marinade Finance Liquid Staking program** IDL (available on-chain at `MarBmsSgKXdrN1egZf5sqe1TMai9K1rChYNDJgjq7aD`), which was built on Anchor 0.27.
 
 **Marinade IDL migration results:**
-- 16 instructions migrated ✅
-- 12 account definitions migrated ✅
-- 8 type definitions migrated ✅
-- 47 account field names renamed (camelCase → snake_case) ✅
-- 0 false positives ✅
-- 2 edge cases flagged with warnings (complex PDA seeds) ⚠️
+- 16 instructions migrated 
+- 12 account definitions migrated 
+- 8 type definitions migrated 
+- 47 account field names renamed (camelCase → snake_case) 
+- 0 false positives 
+- 2 edge cases flagged with warnings (complex PDA seeds) 
 
 After running the codemod + 2 manual fixes, the v1 IDL compiled successfully with `declare_program!`.
 
