@@ -53,7 +53,7 @@ Tagging @[maintainer] — would love your feedback / any edge cases I might have
 
 ## Twitter/X Post Template
 
-Just shipped an automated codemod for the Anchor IDL v0 → v1 migration 🚀
+Just shipped an automated codemod for the Anchor IDL v0 → v1 migration 
 
 Tired of manually changing `isMut: true` to `writable: true` across hundreds of accounts? One command handles 95% of it:
 
