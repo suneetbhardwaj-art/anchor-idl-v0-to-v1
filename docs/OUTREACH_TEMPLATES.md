@@ -26,7 +26,7 @@ I've built an automated codemod that migrates Anchor IDL v0 (pre-0.30) JSON file
 **Tested on:** Marinade Finance IDL (Anchor 0.27) — 16 instructions, 47 field renames, 0 false positives.
 
 **Links:**
-- GitHub repo: [link]
+- GitHub repo: [[link to repo](https://github.com/suneetbhardwaj-art/anchor-idl-v0-to-v1)]
 - Codemod registry: `npx codemod anchor-idl-v0-to-v1`
 
 Would you be open to referencing this in the [v0.30 upgrade guide](https://www.anchor-lang.com/release-notes/0.30.0) or the [IDL docs](https://solana.com/developers/guides/advanced/idls)? 
